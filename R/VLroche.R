@@ -5,12 +5,14 @@
 #' @param return Specify whether to return a dataset. Defaults to FALSE
 #' @param download Specify whether to download fresh files from Google Drive. Defaults to FALSE
 #' @param data Specify where to download files to or where they are stored
+#' @param dataout Specify where cleaned datasets will be stored
 #' @importFrom magrittr %>%
 #' @export
 
 VLroche <- function(return = FALSE,
                     download = FALSE,
-                    data) {
+                    data,
+                    dataout) {
   if (download == TRUE) {
     googledrive::drive_auth()
 
@@ -154,10 +156,13 @@ VLroche <- function(return = FALSE,
   roche_errors$error_type_description[roche_errors$error_code_list == "6282.36"] <-
     "Pipetted volume was not sufficient. Sample was not transferred"
 
+  roche_errors %>%
+    readr::write_csv(paste0(dataout, "/roche_errors.csv"))
+
   tries = 0
   while (tries < 3) {
     test = try(googledrive::drive_upload(
-      media = roche_errors,
+      media = paste0(dataout, "/roche_errors.csv"),
       name = paste0("roche_errors_", Sys.Date(), ".csv"),
       path = googledrive::as_id("1PZGmTQ0fG4_zafM3JfTNL_ek-JeFifvw"),
       overwrite = TRUE

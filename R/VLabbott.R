@@ -5,12 +5,14 @@
 #' @param return Specify whether to return a dataset. Valid arguments are 'errors' and 'percent'. Defaults to FALSE
 #' @param download Specify whether to download fresh files from Google Drive. Defaults to FALSE
 #' @param data Specify where to download files to or where they are stored
+#' @param dataout Specify where to store cleaned datasets
 #' @importFrom magrittr %>%
 #' @export
 
 VLabbott <- function(return = FALSE,
                     download = FALSE,
-                    data) {
+                    data,
+                    dataout) {
   #### LOAD DATA ============================================================================
 
   if (download == TRUE) {
@@ -146,11 +148,14 @@ VLabbott <- function(return = FALSE,
     dplyr::mutate(test_date = as.character(test_date)) %>%
     dplyr::mutate(test_month_year = format(lubridate::ymd(test_date), "%m-%Y"))
 
+  error_codes %>%
+    readr::write_csv(paste0(dataout, "/error_codes.csv"))
+
   tries = 0
   if (return != "percent") {
     while (tries < 3) {
       test = try(googledrive::drive_upload(
-        media = error_codes,
+        media = paste0(dataout, "/error_codes.csv"),
         name = paste0("error_codes_", Sys.Date(), ".csv"),
         path = googledrive::as_id("1PZGmTQ0fG4_zafM3JfTNL_ek-JeFifvw"),
         overwrite = TRUE
@@ -188,7 +193,7 @@ VLabbott <- function(return = FALSE,
       country_code,
       error_type_id
     ) %>%
-    dplyr::summarize(errors = n()) %>%
+    dplyr::summarize(errors = dplyr::n()) %>%
     dplyr::ungroup() %>%
     dplyr::group_by(
       test_month_year,
@@ -197,24 +202,27 @@ VLabbott <- function(return = FALSE,
       supplier_site_name,
       country_code
     ) %>%
-    dplyr::summarize(plates_affected = n())
+    dplyr::summarize(plates_affected = dplyr::n())
 
   error_codes_plates = error_codes_percentages %>%
     dplyr::mutate(test_date = as.character(test_date)) %>%
     dplyr::mutate(test_month_year = format(lubridate::ymd(test_date), "%m-%Y")) %>%
     dplyr::filter(!duplicated(test_record_id)) %>%
     dplyr::group_by(test_month_year) %>%
-    dplyr::summarize(plates = n())
+    dplyr::summarize(plates = dplyr::n())
 
   abbott_error_percentages = error_codes_errors %>%
     dplyr::left_join(error_codes_plates) %>%
     dplyr::mutate(percentage = plates_affected * 100 / plates)
 
+  abbott_error_percentages %>%
+    readr::write_csv(paste0(dataout, "/abbott_error_percentages.csv"))
+
   tries = 0
   if (return != "errors") {
     while (tries < 3) {
       test = try(googledrive::drive_upload(
-        media = abbott_error_percentages,
+        media = paste0(dataout, "/abbott_error_percentages.csv"),
         name = paste0("abbott_error_percentages_", Sys.Date(), ".csv"),
         path = googledrive::as_id("1PZGmTQ0fG4_zafM3JfTNL_ek-JeFifvw"),
         overwrite = TRUE

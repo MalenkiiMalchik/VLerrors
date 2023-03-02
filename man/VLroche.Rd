@@ -4,7 +4,7 @@
 \alias{VLroche}
 \title{Cleans Roche files}
 \usage{
-VLroche(return = FALSE, download = FALSE, data)
+VLroche(return = FALSE, download = FALSE, data, dataout)
 }
 \arguments{
 \item{return}{Specify whether to return a dataset. Defaults to FALSE}
@@ -12,6 +12,8 @@ VLroche(return = FALSE, download = FALSE, data)
 \item{download}{Specify whether to download fresh files from Google Drive. Defaults to FALSE}
 
 \item{data}{Specify where to download files to or where they are stored}
+
+\item{dataout}{Specify where cleaned datasets will be stored}
 }
 \description{
 Reads Roche files, cleans data, and uploads them to Google Drive. Optionally returns processed dataset.

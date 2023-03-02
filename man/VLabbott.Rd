@@ -4,7 +4,7 @@
 \alias{VLabbott}
 \title{Cleans Abbott files}
 \usage{
-VLabbott(return = FALSE, download = FALSE, data)
+VLabbott(return = FALSE, download = FALSE, data, dataout)
 }
 \arguments{
 \item{return}{Specify whether to return a dataset. Valid arguments are 'errors' and 'percent'. Defaults to FALSE}
@@ -12,6 +12,8 @@ VLabbott(return = FALSE, download = FALSE, data)
 \item{download}{Specify whether to download fresh files from Google Drive. Defaults to FALSE}
 
 \item{data}{Specify where to download files to or where they are stored}
+
+\item{dataout}{Specify where to store cleaned datasets}
 }
 \description{
 Reads Abbott files, cleans data, and uploads them to Google Drive. Optionally returns one of two processed datasets.
