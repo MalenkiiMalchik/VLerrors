@@ -101,7 +101,7 @@ VLroche <- function(return = FALSE,
 
 
   error_codes = test_activity_roche %>%
-    dplyr::mutate(internal_id = paste0("INTERNAL-", row_number())) %>%
+    dplyr::mutate(internal_id = paste0("INTERNAL-", dplyr::row_number())) %>%
     tidyr::separate(error_code_list,
                     c("a", "b", "c", "d", "e", "f", "g", "h", "i"),
                     sep = ",") %>%

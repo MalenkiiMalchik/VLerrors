@@ -155,7 +155,7 @@ VLabbott <- function(return = FALSE,
   if (return != "percent") {
     while (tries < 3) {
       test = try(googledrive::drive_upload(
-        media = paste0(dataout, "/error_codes.csv"),
+        media = paste0(dataout, "/abbott_error_codes.csv"),
         name = paste0("error_codes_", Sys.Date(), ".csv"),
         path = googledrive::as_id("1PZGmTQ0fG4_zafM3JfTNL_ek-JeFifvw"),
         overwrite = TRUE
