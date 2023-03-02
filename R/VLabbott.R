@@ -102,7 +102,7 @@ VLabbott <- function(return = FALSE,
     dplyr::left_join(instrument_master, by = c("instrument_id" = "instrument_id"))
 
   test_activity_abbott = test_activity_abbott %>%
-    dplyr::mutate(instrument_model = str_remove_all(instrument_model, "®"))
+    dplyr::mutate(instrument_model = stringr::str_remove_all(instrument_model, "®"))
 
   error_type = error_type %>%
     dplyr::select(error_type_id, error_type_name, error_type_description)
