@@ -4,10 +4,12 @@
 \alias{VLupload}
 \title{Writes files to Google Drive}
 \usage{
-VLupload(downpath)
+VLupload(downpath, all_table_names)
 }
 \arguments{
 \item{downpath}{Specify the path where downloaded files are saved}
+
+\item{all_table_names}{A file passed in from VLdownload}
 }
 \description{
 This function pulls in all relevant files from the database and stores them locally. It only works with an approved IP address.

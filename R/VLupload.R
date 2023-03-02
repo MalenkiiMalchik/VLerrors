@@ -3,10 +3,11 @@
 #' This function pulls in all relevant files from the database and stores them locally. It only works with an approved IP address.
 #'
 #' @param downpath Specify the path where downloaded files are saved
+#' @param all_table_names A file passed in from VLdownload
 #' @importFrom magrittr %>%
 #' @export
 
-VLupload <- function(downpath){
+VLupload <- function(downpath, all_table_names){
 
   googledrive::drive_auth()
 

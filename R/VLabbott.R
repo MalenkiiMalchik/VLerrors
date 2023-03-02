@@ -146,6 +146,7 @@ VLabbott <- function(return = FALSE,
     dplyr::mutate(test_date = as.character(test_date)) %>%
     dplyr::mutate(test_month_year = format(lubridate::ymd(test_date), "%m-%Y"))
 
+  tries = 0
   if (return != "percent") {
     while (tries < 3) {
       test = try(googledrive::drive_upload(
@@ -209,6 +210,7 @@ VLabbott <- function(return = FALSE,
     dplyr::left_join(error_codes_plates) %>%
     dplyr::mutate(percentage = plates_affected * 100 / plates)
 
+  tries = 0
   if (return != "errors") {
     while (tries < 3) {
       test = try(googledrive::drive_upload(
