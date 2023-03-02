@@ -8,7 +8,7 @@
 #' @importFrom magrittr %>%
 #' @export
 
-VLabbot <- function(return = FALSE,
+VLabbott <- function(return = FALSE,
                     download = FALSE,
                     data) {
   #### LOAD DATA ============================================================================
