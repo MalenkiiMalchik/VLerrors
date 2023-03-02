@@ -18,7 +18,7 @@ VLupload <- function(downpath, all_table_names){
                                     name = paste0(all_table_names[n],".csv"),
                                     path = as_id("198YgVgnr9_z6YhqbQWbDlo0GJK70u_cV"),
                                     overwrite = TRUE))
-      if(class(test)=="try-error"){tries = tries+1}
+      if(length(class(test))==1){tries = tries+1}
     }
   }
 }

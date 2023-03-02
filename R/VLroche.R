@@ -167,7 +167,7 @@ VLroche <- function(return = FALSE,
       path = googledrive::as_id("1PZGmTQ0fG4_zafM3JfTNL_ek-JeFifvw"),
       overwrite = TRUE
     ))
-    if (class(test) == "try-error") {
+    if (length(class(test))==1) {
       tries = tries + 1
     } else {
       break
